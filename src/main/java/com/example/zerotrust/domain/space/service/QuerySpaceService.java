@@ -40,13 +40,37 @@ public class QuerySpaceService {
         return  responseSpaces;
     }
 
-    public List<Space> getSpacesBySpaceName(String spaceName) {
-        return spaceReader.findByNames(spaceName);
+    public Space getSpaceBySpaceName(String spaceName) {
+        return spaceReader.findByName(spaceName);
     }
 
-    public List<Space> getSpacesByAuthority(String authorityName) {
-        return spaceReader.findByAuthoritys(
+    public List<ResponseSpace> getSpacesBySpaceName(String spaceName) {
+        List<Space> space = spaceReader.findByNames(spaceName);
+        List<ResponseSpace> responseSpaces = new ArrayList<>();
+
+        for (Space s : space) {
+            responseSpaces.add(new ResponseSpace(
+                    s.getAuthority().getAuthorityName(),
+                    s.getSpaceName()
+            ));
+        }
+
+        return responseSpaces;
+    }
+
+    public List<ResponseSpace> getSpacesByAuthority(String authorityName) {
+        List<Space> space = spaceReader.findByAuthoritys(
                 authorityRepository.findByAuthorityName(authorityName)
-        );
+        );;
+        List<ResponseSpace> responseSpaces = new ArrayList<>();
+
+        for (Space s : space) {
+            responseSpaces.add(new ResponseSpace(
+                    s.getAuthority().getAuthorityName(),
+                    s.getSpaceName()
+            ));
+        }
+
+        return responseSpaces;
     }
 }

@@ -26,4 +26,20 @@ public class Data {
     private String dataName;
 
     private String dataLocation;
+
+    private String dataType;
+
+    public Data(Space space, String dataName, String dataLocation, String type) {
+        this.space = space;
+        this.dataName = dataName;
+        this.dataLocation = dataLocation;
+        this.dataType = type;
+    }
+
+    public void update(Space space, String dataName, String dataLocation, String type) {
+        this.space = space;
+        this.dataName = dataName;
+        this.dataLocation = dataLocation;
+        this.dataType = type;
+    }
 }

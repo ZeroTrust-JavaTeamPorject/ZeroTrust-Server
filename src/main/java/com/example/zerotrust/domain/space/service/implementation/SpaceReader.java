@@ -24,6 +24,10 @@ public class SpaceReader {
         return spaceRepository.findAll();
     }
 
+    public Space findByName(String name) {
+        return spaceRepository.findBySpaceName(name);
+    }
+
     public List<Space> findByNames(String name) {
         return spaceRepository.findAllBySpaceNames(name);
     }

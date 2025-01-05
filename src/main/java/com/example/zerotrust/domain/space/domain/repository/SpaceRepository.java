@@ -12,4 +12,6 @@ public interface SpaceRepository extends JpaRepository<Space, Long> {
     List<Space> findAllBySpaceNames(String name);
 
     List<Space> findAllByAuthoritys(Authority authority);
+
+    Space findBySpaceName(String spaceName);
 }
