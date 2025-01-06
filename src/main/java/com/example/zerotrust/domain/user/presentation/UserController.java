@@ -35,7 +35,7 @@ public class UserController {
 
         User user = new User(userName, password, authority);
         userRepository.save(user);
-        return "redirect:/account";
+        return "account";
     }
 
     // 사용자 수정 폼
@@ -59,6 +59,6 @@ public class UserController {
 
         user.update(userName, password, authority);
         userRepository.save(user);
-        return "redirect:/account";
+        return "account";
     }
 }

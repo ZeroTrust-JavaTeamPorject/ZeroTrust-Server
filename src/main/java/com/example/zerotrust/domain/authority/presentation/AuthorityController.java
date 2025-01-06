@@ -26,7 +26,7 @@ public class AuthorityController {
         Authority authority = new Authority();
         authority.setAuthorityName(authorityName);
         authorityRepository.save(authority);
-        return "redirect:/authorities";
+        return "account";
     }
 
     @GetMapping("/{id}/edit")
@@ -43,6 +43,6 @@ public class AuthorityController {
 
         authority.setAuthorityName(authorityName);
         authorityRepository.save(authority);
-        return "redirect:/account";
+        return "account";
     }
 }
