@@ -1,24 +1,33 @@
 package com.example.zerotrust.domain.otp.presentation;
 
+import com.example.zerotrust.domain.otp.domain.repository.OTPReository;
 import com.example.zerotrust.domain.otp.service.GoogleOTP;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.time.LocalDateTime;
+
+@Slf4j
 @Controller
+@RequiredArgsConstructor
 public class OtpController {
   String secretKey = GoogleOTP.generateSecretKey();
+
+  private final OTPReository otpRepository;
 
   @GetMapping("/otp")
   public String otp(Model model) throws Exception {
     String secretKey = GoogleOTP.generateSecretKey();
     model.addAttribute("key", secretKey);
-    model.addAttribute("qr", GoogleOTP.getQrCodeUrl("yjh5369", secretKey));
-    return "otp";
+    model.addAttribute("qr", GoogleOTP.getQrCodeUrl("zerotrust", secretKey));
+    return "page/otp";
   }
 
   @PostMapping("/otp-check")
@@ -29,6 +38,12 @@ public class OtpController {
           String otp
   ) {
     boolean isSuccess = GoogleOTP.checkOtp(secretKey, otp);
+    LocalDateTime localDateTime = LocalDateTime.now();
+    localDateTime.plusMinutes(30);
+//    otpRepository.save(new OTP(
+//            ,
+//            localDateTime
+//    ));
     if (!isSuccess) {
       Cookie cookie = new Cookie("JSESSIONID", null);
       cookie.setPath("/"); // 쿠키 경로를 '/'로 설정
@@ -40,6 +55,6 @@ public class OtpController {
     }
     model.addAttribute("result", isSuccess);
 
-    return "otp-check";
+    return "page/otp-check";
   }
 }

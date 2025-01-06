@@ -36,8 +36,7 @@ public class GoogleOTP {
      * @param secret      비밀키
      * @return QR코드 URL
      */
-    public static String getQrCodeUrl(String displayName, String secret)
-            throws Exception {
+    public static String getQrCodeUrl(String displayName, String secret) throws Exception {
         String format = "otpauth://totp/" + URLEncoder.encode(displayName, StandardCharsets.UTF_8)
                 .replace("+", "%20")
                 + "?secret=" + secret;
