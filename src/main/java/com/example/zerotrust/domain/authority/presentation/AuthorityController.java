@@ -22,11 +22,11 @@ public class AuthorityController {
     }
 
     @PostMapping
-    public String createAuthority(@RequestParam String authorityName) {
+    public String createAuthority(String authorityName) {
         Authority authority = new Authority();
         authority.setAuthorityName(authorityName);
         authorityRepository.save(authority);
-        return "account";
+        return "redirect:/account";
     }
 
     @GetMapping("/{id}/edit")
@@ -43,6 +43,6 @@ public class AuthorityController {
 
         authority.setAuthorityName(authorityName);
         authorityRepository.save(authority);
-        return "account";
+        return "redirect:/account";
     }
 }

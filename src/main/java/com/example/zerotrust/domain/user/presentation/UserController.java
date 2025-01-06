@@ -27,15 +27,14 @@ public class UserController {
 
     // 사용자 생성
     @PostMapping
-    public String createUser(@RequestParam String userName,
-                             @RequestParam String password,
-                             @RequestParam Long authorityId) {
-        Authority authority = authorityRepository.findById(authorityId)
-                .orElseThrow(() -> new IllegalArgumentException("Authority not found: " + authorityId));
+    public String createUser(String userName,
+                             String password,
+                             String authorityName) {
+        Authority authority = authorityRepository.findByAuthorityName(authorityName);
 
         User user = new User(userName, password, authority);
         userRepository.save(user);
-        return "account";
+        return "redirect:/account";
     }
 
     // 사용자 수정 폼
@@ -48,17 +47,16 @@ public class UserController {
     // 사용자 수정
     @PostMapping("/{id}/edit")
     public String updateUser(@PathVariable Long id,
-                             @RequestParam String userName,
-                             @RequestParam String password,
-                             @RequestParam Long authorityId) {
+                             String userName,
+                             String password,
+                             String authorityName) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found: " + id));
 
-        Authority authority = authorityRepository.findById(authorityId)
-                .orElseThrow(() -> new IllegalArgumentException("Authority not found: " + authorityId));
+        Authority authority = authorityRepository.findByAuthorityName(authorityName);
 
         user.update(userName, password, authority);
         userRepository.save(user);
-        return "account";
+        return "redirect:/account";
     }
 }

@@ -21,7 +21,7 @@ public class OTP {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long otpId;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="userId")
     private User user;
 

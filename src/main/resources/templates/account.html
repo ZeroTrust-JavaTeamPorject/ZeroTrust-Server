@@ -185,7 +185,7 @@
       margin-bottom: 20px;
     }
 
-    .modal-content input[type="text"] {
+    .modal-content input {
       width: 100%;
       margin-bottom: 10px;
       padding: 10px;
@@ -251,7 +251,7 @@
     <div class="modal-content">
       <h3>권한 추가</h3>
       <form action="/api/authorities" method="post">
-        권한명 <input type="text" placeholder="authorityName">
+        권한명 <input type="text" placeholder="authorityName" name="authorityName">
         <input type="submit">
       </form>
     </div>
@@ -272,8 +272,9 @@
     <div class="modal-content">
       <h3>계정 추가</h3>
       <form action="/api/users" method="post">
-        사용자명 <input type="text" placeholder="userName">
-        권한명 <input type="text" placeholder="authorityName">
+        사용자명 <input type="text" placeholder="userName" name="userName">
+        비밀번호 <input type="password" placeholder="password" name="password">
+        권한명 <input type="text" placeholder="authorityName" name="authorityName">
         <input type="submit">
       </form>
     </div>
