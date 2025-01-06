@@ -20,7 +20,9 @@
                 <a href="/account" style="margin: 1rem; text-decoration: none; color: black;">계정관리</a>
                 <a href="/monitor" style="margin: 1rem; text-decoration: none; color: black;">모니터링</a>
             </div>
-            <a href="/login" style="margin: 1rem;">로그인</a>
+            <div sec:authorize="!isAuthenticated()">
+                <a href="/login" style="margin: 1rem;">로그인</a>
+            </div>
         </nav>
     </div>
 </body>

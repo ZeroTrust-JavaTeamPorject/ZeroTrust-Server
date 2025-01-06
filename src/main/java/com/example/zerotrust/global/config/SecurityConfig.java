@@ -35,7 +35,7 @@ public class SecurityConfig {
                 session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
         );
         http.authorizeHttpRequests((authorize) ->
-                authorize.requestMatchers("/login").permitAll()
+                authorize.requestMatchers("/login", "/otp", "/otp-check").permitAll()
                         .anyRequest().authenticated()
         );
         http.formLogin((formLogin) -> formLogin.loginPage("/login")
