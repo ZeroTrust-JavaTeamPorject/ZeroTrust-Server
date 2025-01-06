@@ -219,9 +219,8 @@
     <div class="user-accounts">
       <h2>유저 계정</h2>
       <div class="department">
-        <div class="account">
-          <span>부서명</span>
-          <button>관리</button>
+        <div class="account" th:each="user: ${users}" >
+          <span onclick="accountClick(this)" th:text="${user.getUserName()}">유저명</span>
         </div>
       </div>
       <div class="bottom-buttons">
@@ -233,13 +232,13 @@
     <div class="details">
       <h2>상세 정보</h2>
       <div class="info">
-        <p>아이디: <span>유저명</span></p>
+        <p>아이디: <span class="username">유저명</span></p>
       </div>
       <div class="permissions">
         <h3>권한 관리</h3>
         <form>
           <input type="hidden" th:name="userName">
-          <label><input type="checkbox">권한명</label>
+          권한명<input type="text">
           <input type="submit" value="저장">
         </form>
       </div>
@@ -281,6 +280,44 @@
   </div>
 
   <script>
+
+    function accountClick(element) {
+      const userName = element.textContent; // 클릭한 li의 텍스트 가져오기
+      const sectionTitleElement = document.querySelector('.username'); // section-title 요소 선택
+
+      // section-title 업데이트
+      sectionTitleElement.textContent = userName;
+    }
+
+    // async function fetchSpaceData(element) {
+    //   try {
+    //     // 서버에 요청 보내기
+    //     const dataGrid = document.getElementById('data-grid'); // 데이터를 표시할 grid 요소
+    //     const response = await fetch(`/api/data/${encodeURIComponent(spaceName)}`);
+    //
+    //     if (!response.ok) {
+    //       throw new Error(`HTTP error! Status: ${response.status}`);
+    //     }
+    //
+    //     // JSON 응답 데이터 가져오기
+    //     const data = await response.json();
+    //
+    //     // grid 초기화
+    //     dataGrid.innerHTML = '';
+    //
+    //     // 데이터를 grid에 추가
+    //     data.forEach(item => {
+    //       const card = document.createElement('div');
+    //       card.className = 'card';
+    //       card.textContent = item.someProperty; // 응답 데이터 속성에 맞게 수정
+    //       dataGrid.appendChild(card);
+    //     });
+    //   } catch (error) {
+    //     console.error('Error fetching data:', error);
+    //     dataGrid.innerHTML = '<div class="error">데이터를 불러오는 데 실패했습니다.</div>';
+    //   }
+    // }
+
     function openAddPermissionModal() {
       document.getElementById('permissionModal').classList.add('active');
     }

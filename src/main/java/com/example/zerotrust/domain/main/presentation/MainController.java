@@ -7,6 +7,7 @@ import com.example.zerotrust.domain.otp.domain.repository.OTPReository;
 import com.example.zerotrust.domain.space.domain.Space;
 import com.example.zerotrust.domain.space.presentation.dto.res.ResponseSpace;
 import com.example.zerotrust.domain.space.service.QuerySpaceService;
+import com.example.zerotrust.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,7 @@ public class MainController {
     private final QuerySpaceService querySpaceService;
     private final QueryDataService queryDataService;
     private final OTPReository otpReository;
+    private final UserRepository userRepository;
 
     @GetMapping("/login")
     public String login() {
@@ -40,12 +42,12 @@ public class MainController {
 
     @GetMapping("/account")
     public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-//        if(userDetails.getUsername().equals("superadmin")){
-//            return "account";
-//        } else {
-//            return "redirect:/";
-//        }
-        return "account";
+        if(userDetails.getUsername().equals("superadmin")){
+            model.addAttribute("users", userRepository.findAll());
+            return "account";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/monitor")
