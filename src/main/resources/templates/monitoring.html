@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detail Log Table</title>
   <style>
-    body {
+    .main {
       font-family: Arial, sans-serif;
       background-color: #f8f9ff;
       margin: 0;
@@ -13,7 +13,7 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 90vh;
     }
 
     .log-container {
@@ -81,7 +81,8 @@
   </style>
 </head>
 <body>
-    <div th:replace="~{header/header.html :: navbar}"></div>
+<div th:replace="~{header/header.html :: navbar}"></div>
+<div class="main">
   <div class="log-container">
     <div class="log-title">상세 로그</div>
     <table>
@@ -99,7 +100,7 @@
       </tbody>
     </table>
   </div>
-
+</div>
   <script>
     // Sample log data
     const logData = [

@@ -11,13 +11,13 @@
       box-sizing: border-box;
     }
 
-    body {
+    .main {
       font-family: Arial, sans-serif;
       background-color: #f0f0ff;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      height: 90vh;
     }
 
     .container {
@@ -213,6 +213,8 @@
   </style>
 </head>
 <body>
+<div th:replace="~{header/header.html :: navbar}"></div>
+<div class="main">
   <div class="container">
     <div class="user-accounts">
       <h2>유저 계정</h2>
@@ -264,7 +266,7 @@
       </div>
     </div>
   </div>
-
+</div>
   <!-- Modals -->
   <div class="modal" id="permissionModal">
     <div class="modal-content">

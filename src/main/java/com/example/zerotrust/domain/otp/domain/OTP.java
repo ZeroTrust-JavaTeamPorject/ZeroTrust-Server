@@ -25,10 +25,13 @@ public class OTP {
     @JoinColumn(name="userId")
     private User user;
 
+    private LocalDateTime startTime;
+
     private LocalDateTime endTime;
 
     public OTP(User user, LocalDateTime endTime) {
         this.user = user;
+        this.startTime = LocalDateTime.now();
         this.endTime = endTime;
     }
 }

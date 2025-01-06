@@ -1,81 +1,82 @@
 package com.example.zerotrust.domain.otp.service;
 
 import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.warrenstrange.googleauth.GoogleAuthenticator;
+import com.warrenstrange.googleauth.GoogleAuthenticatorConfig;
+import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+import com.warrenstrange.googleauth.GoogleAuthenticatorQRGenerator;
 import de.taimos.totp.TOTP;
 import org.apache.commons.codec.binary.Base32;
 import org.apache.commons.codec.binary.Hex;
+import org.springframework.stereotype.Service;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 
+@Service
 public class GoogleOTP {
 
-    /**
-     * 비밀키 생성.
-     *
-     * @return 32자리의 비밀키
-     */
-    public static String generateSecretKey() {
-        SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[20];
-        random.nextBytes(bytes);
-        Base32 base32 = new Base32();
-        return base32.encodeToString(bytes);
+    private static final String ISSUER = "ZeroTrust";
+
+    // Generate a new TOTP key
+    public String generateKey() {
+        GoogleAuthenticator gAuth = new GoogleAuthenticator();
+        final GoogleAuthenticatorKey key = gAuth.createCredentials();
+        return key.getKey();
     }
 
-    /**
-     * QR코드 URL 생성.
-     *
-     * @param displayName 표시할 이름
-     * @param secret      비밀키
-     * @return QR코드 URL
-     */
-    public static String getQrCodeUrl(String displayName, String secret) throws Exception {
-        String format = "otpauth://totp/" + URLEncoder.encode(displayName, StandardCharsets.UTF_8)
-                .replace("+", "%20")
-                + "?secret=" + secret;
-        return generateQRCodeImage(format);
+    // Validate the TOTP code
+    public boolean isValid(String secret, int code) {
+        GoogleAuthenticator gAuth = new GoogleAuthenticator(
+                new GoogleAuthenticatorConfig.GoogleAuthenticatorConfigBuilder().build()
+        );
+        return gAuth.authorize(secret, code);
     }
 
-    /**
-     * QR코드 이미지 생성.
-     *
-     * @param barcodeText 바코드 텍스트
-     * @return QR코드 이미지
-     */
-    public static String generateQRCodeImage(String barcodeText) throws Exception {
-        QRCodeWriter qrCodeWriter = new QRCodeWriter();
-        BitMatrix bitMatrix = qrCodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 200, 200);
-
-        ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-
-        MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream);
-
-        return Base64.getEncoder().encodeToString(pngOutputStream.toByteArray());
+    // Generate a QR code URL for Google Authenticator
+    public String generateQRUrl(String secret, String username) {
+        String url = GoogleAuthenticatorQRGenerator.getOtpAuthTotpURL(
+                ISSUER,
+                username,
+                new GoogleAuthenticatorKey.Builder(secret).build());
+        try {
+            return generateQRBase64(url);
+        } catch (Exception e) {
+            return null;
+        }
     }
 
-    /**
-     * OTP 체크.
-     *
-     * @param secretKey 비밀키 (32자리)
-     * @param otp       OTP(6자리)
-     * @return true: 일치, false: 불일치
-     */
-    public static boolean checkOtp(String secretKey, String otp) {
-        return otp.equals(getOtpCode(secretKey));
-    }
+    // Generate a QR code image in Base64 format
+    public static String generateQRBase64(String qrCodeText) {
+        try {
+            QRCodeWriter qrCodeWriter = new QRCodeWriter();
+            Map<EncodeHintType, Object> hintMap = new HashMap<>();
+            hintMap.put(EncodeHintType.CHARACTER_SET, "UTF-8");
 
-    public static String getOtpCode(String secretKey) {
-        Base32 base32 = new Base32();
-        byte[] bytes = base32.decode(secretKey);
-        String hexKey = Hex.encodeHexString(bytes);
-        return TOTP.getOTP(hexKey);
+            BitMatrix bitMatrix = qrCodeWriter.encode(qrCodeText, BarcodeFormat.QR_CODE, 200, 200, hintMap);
+            BufferedImage bufferedImage = MatrixToImageWriter.toBufferedImage(bitMatrix);
+
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ImageIO.write(bufferedImage, "png", baos);
+            byte[] imageBytes = baos.toByteArray();
+            return Base64.getEncoder().encodeToString(imageBytes);
+        } catch (WriterException | IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 }

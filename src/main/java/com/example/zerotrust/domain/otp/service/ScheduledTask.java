@@ -8,8 +8,8 @@ public class ScheduledTask {
 
     @Scheduled(fixedDelay = 60000 * 10)
     public void runEvery30Minutes() throws Exception {
-        String secretKey = GoogleOTP.generateSecretKey();
-        String qrCode = GoogleOTP.getQrCodeUrl("zerotrust", secretKey);
+        String secretKey = CustomOTP.generateSecretKey();
+        String qrCode = CustomOTP.getQrCodeUrl("zerotrust", secretKey);
 
 
     }
