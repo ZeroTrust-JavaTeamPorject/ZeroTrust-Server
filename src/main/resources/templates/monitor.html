@@ -90,9 +90,7 @@
         <tr>
           <th>접속 시간</th>
           <th>접속한 유저</th>
-          <th>IP 주소</th>
           <th>이벤트</th>
-          <th>이벤트 처리</th>
         </tr>
       </thead>
       <tbody id="logTableBody">
@@ -101,29 +99,5 @@
     </table>
   </div>
 </div>
-  <script>
-    // Sample log data
-    const logData = [
-      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
-      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
-      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
-      // Add more sample rows if needed
-    ];
-
-    const logTableBody = document.getElementById("logTableBody");
-
-    // Populate table rows dynamically
-    logData.forEach(log => {
-      const row = document.createElement("tr");
-      row.innerHTML = `
-        <td>${log.time}</td>
-        <td>${log.user}</td>
-        <td>${log.ip}</td>
-        <td>${log.event}</td>
-        <td><button class="block-btn">차단</button></td>
-      `;
-      logTableBody.appendChild(row);
-    });
-  </script>
 </body>
 </html>
