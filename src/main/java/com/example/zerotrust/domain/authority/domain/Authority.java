@@ -1,12 +1,13 @@
 package com.example.zerotrust.domain.authority.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Setter
 @EntityListeners(AuditingEntityListener.class)
 public class Authority {
 

@@ -27,8 +27,13 @@ public class DataController {
     }
 
     @PostMapping("/{dataId}/update")
-    public void update(@PathVariable Long dataId, @RequestBody RequestData requestData){
-        commandDataService.update(dataId, requestData);
+    public void update(@PathVariable Long dataId, String spaceName, String dataName, String dataLocation, String dataType){
+        commandDataService.update(dataId, new RequestData(
+                spaceName,
+                dataName,
+                dataLocation,
+                dataType
+        ));
     }
 
     @PostMapping("/{dataId}/delete")

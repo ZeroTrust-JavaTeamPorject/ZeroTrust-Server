@@ -31,4 +31,10 @@ public class User {
         this.authority = authority;
     }
 
+    public void update(String userName, String password, Authority authority) {
+        this.userName = userName;
+        this.password = password;
+        this.authority = authority;
+    }
+
 }

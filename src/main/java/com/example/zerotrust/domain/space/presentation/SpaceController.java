@@ -32,18 +32,26 @@ public class SpaceController {
 
     @PostMapping("/create")
     public String createSpace(
-            @RequestBody RequestSpace requestSpace
+            String authorityName,
+            String spaceName
     ) {
-        commandSpaceService.create(requestSpace);
+        commandSpaceService.create(new RequestSpace(
+                authorityName,
+                spaceName
+        ));
         return "account";
     }
 
     @PostMapping("/{spaceId}/update")
     public void updateSpace(
             @PathVariable("spaceId") Long spaceId,
-            @RequestBody RequestSpace requestSpace
+            String authorityName,
+            String spaceName
     ) {
-        commandSpaceService.update(spaceId, requestSpace);
+        commandSpaceService.update(spaceId, new RequestSpace(
+                authorityName,
+                spaceName
+        ));
     }
 
     @PostMapping("/{spaceId}/delete")

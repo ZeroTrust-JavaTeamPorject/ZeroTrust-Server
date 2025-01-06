@@ -243,27 +243,6 @@
           <input type="submit" value="저장">
         </form>
       </div>
-      <div class="recent-activity">
-        <h3>이벤트</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>접속 시간</th>
-              <th>IP 주소</th>
-              <th>이벤트</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>접속 시간</td>
-              <td>아이피</td>
-              <td>활동 내역</td>
-              <td><button class="block-button">차단</button></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </div>
@@ -271,8 +250,10 @@
   <div class="modal" id="permissionModal">
     <div class="modal-content">
       <h3>권한 추가</h3>
-      <input type="text" placeholder="권한 이름">
-      <button onclick="closeModal('permissionModal')">확인</button>
+      <form action="/api/authorities" method="post">
+        권한명 <input type="text" placeholder="authorityName">
+        <input type="submit">
+      </form>
     </div>
   </div>
 
@@ -280,8 +261,8 @@
     <div class="modal-content">
       <h3>부서 추가</h3>
       <form action="/api/space/create" method="post">
-        권한 <input type="text" name="authorityName">
         부서명 <input type="text" name="spaceName">
+        권한명 <input type="text" name="authorityName">
         <input type="submit">
       </form>
     </div>
@@ -290,18 +271,11 @@
   <div class="modal" id="accountModal">
     <div class="modal-content">
       <h3>계정 추가</h3>
-      <input type="text" placeholder="아이디">
-      <input type="text" placeholder="부서">
-      <input type="text" placeholder="직급">
-      <input type="text" placeholder="이메일">
-      <div class="permissions">
-        <h3>권한 설정</h3>
-        <label><input type="checkbox"> 서버 개발 부서</label>
-        <label><input type="checkbox"> 비즈니스 기획 부서</label>
-        <label><input type="checkbox"> 프론트엔드 개발 부서</label>
-        <label><input type="checkbox"> 기밀 정보 관리</label>
-      </div>
-      <button onclick="closeModal('accountModal')">확인</button>
+      <form action="/api/users" method="post">
+        사용자명 <input type="text" placeholder="userName">
+        권한명 <input type="text" placeholder="authorityName">
+        <input type="submit">
+      </form>
     </div>
   </div>
 

@@ -26,6 +26,11 @@ public class MainController {
     private final QueryDataService queryDataService;
     private final OTPReository otpReository;
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/")
     public String main(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         model.addAttribute("space", querySpaceService.getSpaces());
@@ -35,11 +40,12 @@ public class MainController {
 
     @GetMapping("/account")
     public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        if(userDetails.getUsername().equals("superadmin")){
-            return "account";
-        } else {
-            return "redirect:/";
-        }
+//        if(userDetails.getUsername().equals("superadmin")){
+//            return "account";
+//        } else {
+//            return "redirect:/";
+//        }
+        return "account";
     }
 
     @GetMapping("/monitor")
