@@ -1,6 +1,9 @@
 package com.example.zerotrust.domain.otp.presentation;
 
 import com.example.zerotrust.domain.otp.service.GoogleOTP;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,8 +22,24 @@ public class OtpController {
   }
 
   @PostMapping("/otp-check")
-  public String check(Model model, String otp) {
-    model.addAttribute("result", GoogleOTP.checkOtp(secretKey, otp));
+  public String check(
+          Model model,
+          HttpServletResponse response,
+          HttpServletRequest request,
+          String otp
+  ) {
+    boolean isSuccess = GoogleOTP.checkOtp(secretKey, otp);
+    if (!isSuccess) {
+      Cookie cookie = new Cookie("JSESSIONID", null);
+      cookie.setPath("/"); // 쿠키 경로를 '/'로 설정
+      cookie.setMaxAge(0); // 쿠키 만료 시간 설정 (0으로 설정하면 즉시 만료됨)
+      response.addCookie(cookie);
+
+      // 클라이언트에서 세션을 무효화
+      request.getSession().invalidate();
+    }
+    model.addAttribute("result", isSuccess);
+
     return "otp-check";
   }
 }
