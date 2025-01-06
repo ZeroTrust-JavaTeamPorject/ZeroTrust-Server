@@ -217,40 +217,8 @@
     <div class="user-accounts">
       <h2>유저 계정</h2>
       <div class="department">
-        <h3>서버 개발 부서</h3>
         <div class="account">
-          <span>Jahyeon-Team1</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Yunchan-Team2</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Michael-Team3</span>
-          <button>관리</button>
-        </div>
-      </div>
-      <div class="department blue">
-        <h3>비즈니스 기획 부서</h3>
-        <div class="account">
-          <span>Jahyeon-Team1</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Alice-Team1</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Taceho-Team2</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Kudice-Team3</span>
-          <button>관리</button>
-        </div>
-        <div class="account">
-          <span>Bobaco-Team3</span>
+          <span>부서명</span>
           <button>관리</button>
         </div>
       </div>
@@ -263,18 +231,15 @@
     <div class="details">
       <h2>상세 정보</h2>
       <div class="info">
-        <p>아이디: Jahyeon-Team1</p>
-        <p>부서: 서버 개발</p>
-        <p>직급: 대리</p>
-        <p>이메일: Jahyeon07@gmail.com</p>
+        <p>아이디: <span>유저명</span></p>
       </div>
       <div class="permissions">
         <h3>권한 관리</h3>
-        <label><input type="checkbox" checked> 서버 개발 부서</label>
-        <label><input type="checkbox"> 비즈니스 기획 부서</label>
-        <label><input type="checkbox"> 프론트엔드 개발 부서</label>
-        <label><input type="checkbox"> 기밀 정보 관리</label>
-        <button>저장</button>
+        <form>
+          <input type="hidden" th:name="userName">
+          <label><input type="checkbox">권한명</label>
+          <input type="submit" value="저장">
+        </form>
       </div>
       <div class="recent-activity">
         <h3>이벤트</h3>
@@ -289,15 +254,9 @@
           </thead>
           <tbody>
             <tr>
-              <td>2025-01-06 12:00 PM</td>
-              <td>192.168.1.1</td>
-              <td>Login Success</td>
-              <td><button class="block-button">차단</button></td>
-            </tr>
-            <tr>
-              <td>2025-01-06 12:00 PM</td>
-              <td>192.168.1.1</td>
-              <td>Login Success</td>
+              <td>접속 시간</td>
+              <td>아이피</td>
+              <td>활동 내역</td>
               <td><button class="block-button">차단</button></td>
             </tr>
           </tbody>
@@ -318,8 +277,11 @@
   <div class="modal" id="departmentModal">
     <div class="modal-content">
       <h3>부서 추가</h3>
-      <input type="text" placeholder="부서 이름">
-      <button onclick="closeModal('departmentModal')">확인</button>
+      <form action="/api/space/create" method="post">
+        권한 <input type="text" name="authorityName">
+        부서명 <input type="text" name="spaceName">
+        <input type="submit">
+      </form>
     </div>
   </div>
 
@@ -352,10 +314,6 @@
 
     function openAddAccountModal() {
       document.getElementById('accountModal').classList.add('active');
-    }
-
-    function closeModal(modalId) {
-      document.getElementById(modalId).classList.remove('active');
     }
   </script>
 </body>

@@ -25,26 +25,17 @@ public class SpaceController {
         return querySpaceService.getSpaces();
     }
 
-    @GetMapping("/{spaceId}")
-    public ResponseSpace getSpaceById(@PathVariable("spaceId") Long spaceId) {
-        return querySpaceService.getSpace(spaceId);
-    }
-
     @GetMapping("/{spaceName}")
     public List<ResponseSpace> getSpaceByName(@PathVariable("spaceName") String spaceName) {
         return querySpaceService.getSpacesBySpaceName(spaceName);
     }
 
-    @GetMapping("/authority/{authName}")
-    public List<ResponseSpace> getSpacesByAuthName(@PathVariable("authName") String authName) {
-        return querySpaceService.getSpacesByAuthority(authName);
-    }
-
     @PostMapping("/create")
-    public void createSpace(
+    public String createSpace(
             @RequestBody RequestSpace requestSpace
     ) {
         commandSpaceService.create(requestSpace);
+        return "account";
     }
 
     @PostMapping("/{spaceId}/update")

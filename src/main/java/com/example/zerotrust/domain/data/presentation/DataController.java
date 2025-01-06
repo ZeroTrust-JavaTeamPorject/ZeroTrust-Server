@@ -46,21 +46,6 @@ public class DataController {
         return queryDataService.getDatas();
     }
 
-    @GetMapping("/{dataName}")
-    public List<ResponseData> getDataByName(@PathVariable String dataName){
-        return queryDataService.findAllByName(dataName);
-    }
-
-    @GetMapping("/location/{dataLocation}")
-    public List<ResponseData> getDataByLocation(@PathVariable String dataLocation){
-        return queryDataService.findAllByLocation(dataLocation);
-    }
-
-    @GetMapping("/type/{dataType}")
-    public List<ResponseData> getDataByDataType(@PathVariable String dataType){
-        return queryDataService.findAllByType(dataType);
-    }
-
     @GetMapping("/space/{spaceName}")
     public List<ResponseData> getDataBySpace(@PathVariable String spaceName){
         return queryDataService.findAllBySpace(spaceName);
