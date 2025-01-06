@@ -1,10 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Log Table</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9ff;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .log-container {
+      width: 90%;
+      max-width: 1200px;
+      background-color: #e8eafd;
+      border: 2px solid #000;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+    }
+
+    .log-title {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      border: 2px solid #000;
+      padding: 10px;
+      background-color: #fff;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fff;
+      margin: 0 auto;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 12px 15px;
+      text-align: center;
+      border: 1px solid #000;
+    }
+
+    th {
+      background-color: #f0f3ff;
+      font-weight: bold;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+
+    tr:hover {
+      background-color: #f0f3ff;
+    }
+
+    .block-btn {
+      display: inline-block;
+      padding: 5px 10px;
+      background-color: #ff4d4d;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .block-btn:hover {
+      background-color: #e63939;
+    }
+  </style>
 </head>
 <body>
+    <div th:replace="~{header/header.html :: navbar}"></div>
+  <div class="log-container">
+    <div class="log-title">상세 로그</div>
+    <table>
+      <thead>
+        <tr>
+          <th>접속 시간</th>
+          <th>접속한 유저</th>
+          <th>IP 주소</th>
+          <th>이벤트</th>
+          <th>이벤트 처리</th>
+        </tr>
+      </thead>
+      <tbody id="logTableBody">
+        <!-- Table rows will be dynamically generated -->
+      </tbody>
+    </table>
+  </div>
 
+  <script>
+    // Sample log data
+    const logData = [
+      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
+      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
+      { time: "2025-01-06 12:00PM", user: "Jahyeon-Team1", ip: "192.168.1.1", event: "Login Success" },
+      // Add more sample rows if needed
+    ];
+
+    const logTableBody = document.getElementById("logTableBody");
+
+    // Populate table rows dynamically
+    logData.forEach(log => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${log.time}</td>
+        <td>${log.user}</td>
+        <td>${log.ip}</td>
+        <td>${log.event}</td>
+        <td><button class="block-btn">차단</button></td>
+      `;
+      logTableBody.appendChild(row);
+    });
+  </script>
 </body>
 </html>
