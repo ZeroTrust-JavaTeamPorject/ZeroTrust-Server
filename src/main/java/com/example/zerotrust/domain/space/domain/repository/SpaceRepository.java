@@ -9,9 +9,9 @@ import java.util.List;
 
 @Repository
 public interface SpaceRepository extends JpaRepository<Space, Long> {
-    List<Space> findAllBySpaceNames(String name);
+    List<Space> findAllBySpaceName(String name);
 
-    List<Space> findAllByAuthoritys(Authority authority);
+    List<Space> findAllByAuthority(Authority authority);
 
     Space findBySpaceName(String spaceName);
 }
