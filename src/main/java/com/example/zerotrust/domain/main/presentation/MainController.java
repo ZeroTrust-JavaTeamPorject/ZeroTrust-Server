@@ -1,6 +1,9 @@
 package com.example.zerotrust.domain.main.presentation;
 
 import com.example.zerotrust.domain.data.service.QueryDataService;
+import com.example.zerotrust.domain.main.presentation.dto.response.OTPResponse;
+import com.example.zerotrust.domain.otp.domain.OTP;
+import com.example.zerotrust.domain.otp.domain.repository.OTPReository;
 import com.example.zerotrust.domain.space.domain.Space;
 import com.example.zerotrust.domain.space.presentation.dto.res.ResponseSpace;
 import com.example.zerotrust.domain.space.service.QuerySpaceService;
@@ -11,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -20,6 +24,7 @@ public class MainController {
 
     private final QuerySpaceService querySpaceService;
     private final QueryDataService queryDataService;
+    private final OTPReository otpReository;
 
     @GetMapping("/")
     public String main(@AuthenticationPrincipal UserDetails userDetails, Model model) {
@@ -40,6 +45,18 @@ public class MainController {
     @GetMapping("/monitor")
     public String monitor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         if(userDetails.getUsername().equals("superadmin")){
+            List<OTPResponse> responseOTPs = Arrays.asList();
+            List<OTP> otps = otpReository.findAll();
+
+            for(OTP otp : otps){
+                responseOTPs.add(new OTPResponse(
+                        otp.getUser().getUserName(),
+                        otp.getStartTime()
+                ));
+            }
+
+            model.addAttribute("logs", responseOTPs);
+
             return "monitor";
         } else {
             return "redirect:/";

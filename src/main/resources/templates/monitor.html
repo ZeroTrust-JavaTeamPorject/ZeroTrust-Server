@@ -88,13 +88,15 @@
     <table>
       <thead>
         <tr>
-          <th>접속 시간</th>
           <th>접속한 유저</th>
-          <th>이벤트</th>
+          <th>접속 시간</th>
         </tr>
       </thead>
-      <tbody id="logTableBody">
-        <!-- Table rows will be dynamically generated -->
+      <tbody id="logTableBody" th:each="log : ${logs}">
+        <tr>
+          <td th:text="${log.username()}"></td>
+          <td th:text="${log.connectTime()}"></td>
+        </tr>
       </tbody>
     </table>
   </div>
