@@ -7,11 +7,12 @@ import com.example.zerotrust.domain.data.presentation.dto.res.ResponseData;
 import com.example.zerotrust.domain.data.service.CommandDataService;
 import com.example.zerotrust.domain.data.service.QueryDataService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/data")
 public class DataController {

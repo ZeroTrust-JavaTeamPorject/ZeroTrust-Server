@@ -7,11 +7,12 @@ import com.example.zerotrust.domain.space.service.CommandSpaceService;
 import com.example.zerotrust.domain.space.service.QuerySpaceService;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/api/space")
 public class SpaceController {
