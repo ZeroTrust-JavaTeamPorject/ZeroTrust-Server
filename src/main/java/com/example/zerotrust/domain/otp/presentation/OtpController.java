@@ -1,9 +1,7 @@
 package com.example.zerotrust.domain.otp.presentation;
 
-import com.example.zerotrust.domain.otp.domain.OTP;
 import com.example.zerotrust.domain.otp.domain.repository.OTPReository;
 import com.example.zerotrust.domain.otp.service.GoogleOTP;
-import com.example.zerotrust.domain.otp.util.OTPUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 @Slf4j
 @Controller
@@ -24,14 +21,13 @@ public class OtpController {
   String secretKey = GoogleOTP.generateSecretKey();
 
   private final OTPReository otpRepository;
-  private final OTPUtil otpUtil;
 
   @GetMapping("/otp")
   public String otp(Model model) throws Exception {
     String secretKey = GoogleOTP.generateSecretKey();
     model.addAttribute("key", secretKey);
     model.addAttribute("qr", GoogleOTP.getQrCodeUrl("zerotrust", secretKey));
-    return "otp";
+    return "page/otp";
   }
 
   @PostMapping("/otp-check")
@@ -59,6 +55,6 @@ public class OtpController {
     }
     model.addAttribute("result", isSuccess);
 
-    return "otp-check";
+    return "page/otp-check";
   }
 }
