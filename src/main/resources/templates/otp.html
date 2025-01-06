@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Google OTP</title>
+</head>
+<body>
+<h4>KEY : <span th:text="${key}"></span></h4>
+<img th:src="'data:image/jpeg;base64,' + ${qr}" alt="QR Code">
+<form action="/otp-check" method="post">
+    <input type="text" name="otp">
+    <input type="submit">
+</form>
+</body>
+</html>

@@ -29,10 +29,10 @@ public class SpaceReader {
     }
 
     public List<Space> findByNames(String name) {
-        return spaceRepository.findAllBySpaceNames(name);
+        return spaceRepository.findAllBySpaceName(name);
     }
 
     public List<Space> findByAuthoritys(Authority authority) {
-        return spaceRepository.findAllByAuthoritys(authority);
+        return spaceRepository.findAllByAuthority(authority);
     }
 }
