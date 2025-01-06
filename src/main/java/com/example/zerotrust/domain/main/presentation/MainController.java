@@ -29,12 +29,20 @@ public class MainController {
     }
 
     @GetMapping("/account")
-    public String account(Model model) {
-        return "account";
+    public String account(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if(userDetails.getUsername().equals("superadmin")){
+            return "account";
+        } else {
+            return "redirect:/";
+        }
     }
 
     @GetMapping("/monitor")
-    public String monitor(Model model) {
-        return "monitor";
+    public String monitor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
+        if(userDetails.getUsername().equals("superadmin")){
+            return "monitor";
+        } else {
+            return "redirect:/";
+        }
     }
 }
