@@ -3,6 +3,7 @@ package com.example.zerotrust.domain.user.service;
 import com.example.zerotrust.domain.user.domain.repository.UserRepository;
 import com.example.zerotrust.domain.user.service.dto.CustomUser;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserDetailService implements UserDetailsService {
@@ -28,7 +30,8 @@ public class UserDetailService implements UserDetailsService {
         var user = result.get();
 
         List<GrantedAuthority> authorityList = new ArrayList<>();
-        authorityList.add(new SimpleGrantedAuthority("일반 유저"));
+        log.warn("권한: "+result.get().getAuthority().getAuthorityName());
+        authorityList.add(new SimpleGrantedAuthority(result.get().getAuthority().getAuthorityName()));
 
         CustomUser customUser = new CustomUser(user.getUserName(), user.getPassword(), authorityList);
         customUser.displayName = user.getUserName();

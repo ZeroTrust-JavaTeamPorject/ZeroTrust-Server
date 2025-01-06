@@ -17,12 +17,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="authorityId")
     private Authority authority;
 
     private String userName;
 
     private String password;
+
+    public User(String userName, String password, Authority authority) {
+        this.userName = userName;
+        this.password = password;
+        this.authority = authority;
+    }
 
 }
