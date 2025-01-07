@@ -126,8 +126,8 @@
     <div class="info-container">
       <div class="title">정보 공간</div>
       <div class="section">
-        <ul th:each="s : ${space}">
-          <li th:text="s.spaceName" onclick="fetchSpaceData(this)">부서명</li>
+        <ul th:each="s : ${spaces}">
+          <li th:text="${s.spaceName}" onclick="fetchSpaceData(this)">부서명</li>
         </ul>
       </div>
     </div>
@@ -150,7 +150,9 @@
 
       try {
         // 서버에 요청 보내기
-        const response = await fetch(`/space/${encodeURIComponent(spaceName)}`);
+        const response = await fetch(`/rest-api/data/space/${encodeURIComponent(spaceName)}`,{
+          method: 'GET',
+        });
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -158,6 +160,7 @@
 
         // JSON 응답 데이터 가져오기
         const data = await response.json();
+        console.log(data);
 
         // grid 초기화
         dataGrid.innerHTML = '';
@@ -165,13 +168,18 @@
         // 데이터를 grid에 추가
         data.forEach(item => {
           const card = document.createElement('div');
+          const contentDataName = document.createElement('p');
+          const contentDataType = document.createElement('p');
           card.className = 'card';
-          card.textContent = item.someProperty; // 응답 데이터 속성에 맞게 수정
+          contentDataName.textContent = `파일명 : ${item.dataName}`; // 응답 데이터 속성에 맞게 수정
+          contentDataType.textContent = `파일타입 : ${item.dataType}`;
+          card.appendChild(contentDataName);
+          card.appendChild(contentDataType);
           dataGrid.appendChild(card);
         });
       } catch (error) {
         console.error('Error fetching data:', error);
-        dataGrid.innerHTML = '<div class="error">데이터를 불러오는 데 실패했습니다.</div>';
+        dataGrid.innerHTML = '<div class="error">데이터가 존재하지 않습니다.</div>';
       }
     }
   </script>

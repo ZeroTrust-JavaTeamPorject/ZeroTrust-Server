@@ -1,21 +1,18 @@
 package com.example.zerotrust.domain.data.presentation;
 
-import com.example.zerotrust.domain.data.domain.Data;
-import com.example.zerotrust.domain.data.domain.repository.DataRepository;
 import com.example.zerotrust.domain.data.presentation.dto.req.RequestData;
 import com.example.zerotrust.domain.data.presentation.dto.res.ResponseData;
 import com.example.zerotrust.domain.data.service.CommandDataService;
 import com.example.zerotrust.domain.data.service.QueryDataService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/data")
-public class DataController {
+@RequestMapping("/rest-api/data")
+public class DataRestController {
 
     private final CommandDataService commandDataService;
     private final QueryDataService queryDataService;

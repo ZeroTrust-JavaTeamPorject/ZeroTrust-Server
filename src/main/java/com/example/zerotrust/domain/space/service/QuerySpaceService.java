@@ -21,7 +21,7 @@ public class QuerySpaceService {
         Space space = spaceReader.findById(spaceId);
 
         return new ResponseSpace(
-                space.getAuthority().getAuthorityName(),
+//                space.getAuthority().getAuthorityName(),
                 space.getSpaceName()
         );
     }
@@ -32,7 +32,7 @@ public class QuerySpaceService {
 
         for (Space s : space) {
             responseSpaces.add(new ResponseSpace(
-                    s.getAuthority().getAuthorityName(),
+//                    s.getAuthority().getAuthorityName(),
                     s.getSpaceName()
             ));
         }
@@ -50,7 +50,7 @@ public class QuerySpaceService {
 
         for (Space s : space) {
             responseSpaces.add(new ResponseSpace(
-                    s.getAuthority().getAuthorityName(),
+//                    s.getAuthority().getAuthorityName(),
                     s.getSpaceName()
             ));
         }
@@ -66,7 +66,7 @@ public class QuerySpaceService {
 
         for (Space s : space) {
             responseSpaces.add(new ResponseSpace(
-                    s.getAuthority().getAuthorityName(),
+//                    s.getAuthority().getAuthorityName(),
                     s.getSpaceName()
             ));
         }

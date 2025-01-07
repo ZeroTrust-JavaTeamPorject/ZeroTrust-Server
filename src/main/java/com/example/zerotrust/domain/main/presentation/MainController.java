@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class MainController {
 
     @GetMapping("/")
     public String main(@AuthenticationPrincipal UserDetails userDetails, Model model) {
-        model.addAttribute("space", querySpaceService.getSpaces());
+        model.addAttribute("spaces", querySpaceService.getSpaces());
 
         return "index";
     }
@@ -53,7 +54,7 @@ public class MainController {
     @GetMapping("/monitor")
     public String monitor(@AuthenticationPrincipal UserDetails userDetails, Model model) {
         if(userDetails.getUsername().equals("superadmin")){
-            List<OTPResponse> responseOTPs = Arrays.asList();
+            List<OTPResponse> responseOTPs = new ArrayList<>();
             List<OTP> otps = otpReository.findAll();
 
             for(OTP otp : otps){

@@ -2,6 +2,8 @@ package com.example.zerotrust.domain.authority.presentation;
 
 import com.example.zerotrust.domain.authority.domain.Authority;
 import com.example.zerotrust.domain.authority.domain.repository.AuthorityRepository;
+import com.example.zerotrust.domain.user.domain.User;
+import com.example.zerotrust.domain.user.domain.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,11 +17,6 @@ import java.util.List;
 public class AuthorityController {
 
     private final AuthorityRepository authorityRepository;
-
-    @GetMapping
-    public List<Authority> getAuthorities(Model model) {
-        return authorityRepository.findAll();
-    }
 
     @PostMapping
     public String createAuthority(String authorityName) {
